@@ -39,7 +39,7 @@ int * find_sequences(int *arr, int len){
 	int res[6];
 	findAP(arr, len, res);
 	findGP(arr, len, res);
-	return arr;
+	return res;
 }
 
 void findAP(int *arr, int len, int *res)
