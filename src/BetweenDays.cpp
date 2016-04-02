@@ -22,6 +22,8 @@ Difficulty : Hard
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+void toDate(struct node *date, int dtarr[]);
+int diff(int *date1, int *date2);
 
 struct node{
 	int data;
@@ -30,5 +32,69 @@ struct node{
 
 
 int between_days(struct node *date1head, struct node *date2head){
-	return -1;
+	if (date1head == NULL || date2head == NULL)
+		return -1;
+	int dtarr1[3], dtarr2[3];
+	toDate(date1head, dtarr1);
+	toDate(date2head, dtarr2);
+	return diff(dtarr1, dtarr2);
+}
+
+void toDate(struct node *date, int dtarr[])
+{
+	int d = 0, m = 0, y = 0, temp;
+	while (date != NULL)
+	{
+		temp = 2;
+		while (temp > 0)
+		{
+			d = d * 10 + date->data;
+			date = date->next;
+			temp--;
+		}
+		temp = 2;
+		while (temp > 0)
+		{
+			m = m * 10 + date->data;
+			date = date->next;
+			temp--;
+		}
+		temp = 4;
+		while (temp > 0)
+		{
+			y = y * 10 + date->data;
+			date = date->next;
+			temp--;
+		}
+		dtarr[0] = d;
+		dtarr[1] = m;
+		dtarr[2] = y;
+	}
+}
+
+int diff(int *date1, int *date2)
+{
+	int diff = 0, i;
+	int days[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+	if (date1[2] == date2[2])
+	{
+		if (date1[1] == date2[1])
+		{
+			if (date1[0] == date2[0])
+				return 0;
+			return date2[0] - date1[0] - 1;
+		}
+		else
+		{
+			diff = (days[date1[1] - 1] - date1[0]) + date2[0] - 1;
+			if (date1[1] != date2[1] - 1)
+			{
+				for (i = date1[1] + 1; i < date2[1]; i++)
+				{
+					diff += days[i - 1];
+				}
+			}
+			return diff;
+		}
+	}
 }

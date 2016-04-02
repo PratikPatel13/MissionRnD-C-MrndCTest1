@@ -27,12 +27,84 @@ Difficulty : Medium
 */
 #include <stdlib.h>
 #include <stdio.h>
-
+int length(struct node *head);
 struct node{
 	int data;
 	struct node *next;
 };
 int merge_circularlists(struct node **head1, struct node **head2){
 	//Returns Length of merged Sorted circular SLL and also points *head1 to final SLL .
-	return -1;
+	if (head1 == NULL || head2 == NULL)
+		return -1;
+	if (*head1 == NULL && *head2 == NULL)
+		return -1;
+	struct node *c1 = *head1,*c2 = *head2, *p = NULL,*head = NULL,*temp = NULL;
+	if (*head1 == NULL)
+		return length(*head2);
+	if (*head2 == NULL)
+		return length(*head1);
+	temp = *head1;
+	while (temp->next != *head1)
+	{
+		temp = temp->next;
+	}
+	temp->next = NULL;
+	temp = *head2;
+	while (temp->next != *head2)
+	{
+		temp = temp->next;
+	}
+	temp->next = NULL;
+	if (c1->data < c2->data)
+	{
+		p = c1;
+		c1 = c1->next;
+	}
+	else
+	{
+		p = c2;
+		c2 = c2->next;
+	}
+	head = p;
+	while (c1 != NULL && c2 != NULL)
+	{
+		if (c1->data < c2->data)
+		{
+			p->next = c1;
+			p = c1;
+			c1 = c1->next;
+		}
+		else
+		{
+			p->next = c2;
+			p = c2;
+			c2 = c2->next;
+		}
+	}
+	if (c1 == NULL)
+	{
+		p->next = c2;
+	}
+	else
+	{
+		p->next = c1;
+	}
+	while (p->next != NULL)
+		p = p->next;
+	p->next = head;
+	*head1 = head;
+	return length(head);
+
+}
+
+int length(struct node *head)
+{
+	struct node *temp = head;
+	int length=0;
+	while (temp->next != head)
+	{
+		length++;
+		temp = temp->next;
+	}
+	return length + 1;
 }

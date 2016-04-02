@@ -35,3 +35,17 @@ int * find_sequences(int *arr, int len){
 	//Return final array which has 6indexes [AP1_S,AP1_E,AP2_S,AP2_E,GP1_S,GP2_E]
 	return NULL;
 }
+
+void findAP(int *arr, int len)
+{
+	int d = 0, temp = 0, i,j;
+	for (i = 0; i < len; i++)
+	{
+		temp = 0;
+		d = arr[i + 1] - arr[i];
+		for (j = i + 1; j < len; j++)
+		{
+			if ((arr[j+1] - arr[j]) == d)
+		}
+	}
+}
