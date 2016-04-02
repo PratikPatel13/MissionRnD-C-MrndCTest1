@@ -36,15 +36,15 @@ int * find_sequences(int *arr, int len){
 	//Return final array which has 6indexes [AP1_S,AP1_E,AP2_S,AP2_E,GP1_S,GP2_E]
 	if (arr == NULL)
 		return NULL;
-	int res[6];
+	int *res = (int *)malloc(sizeof(int)*6);
 	findAP(arr, len, res);
 	findGP(arr, len, res);
 	return res;
 }
 
-void findAP(int *arr, int len, int *res)
+void findAP(int *arr, int len, int res[])
 {
-	int d = 0, temp = 0, i,j,k=0;
+	int d = 0, temp = 0, i, j, k = 0;
 	for (i = 0; i < len; i++)
 	{
 		temp = 0;
@@ -59,13 +59,13 @@ void findAP(int *arr, int len, int *res)
 		if (temp > 0)
 		{
 			res[k++] = i;
-			res[k++] = j - 1;
+			res[k++] = j;
 			i = i + j;
 		}
 	}
 }
 
-void findGP(int *arr, int len, int *res)
+void findGP(int *arr, int len, int res[])
 {
 	int  temp = 0, i, j, k = 4;
 	float d = 0;
